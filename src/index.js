@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const cors = require('cors');
 const { add } = require("./arithmetica");
@@ -6,46 +7,47 @@ const { multiply } = require("./arithmetica");
 const { divide } = require("./arithmetica");
 const app = express();
 app.use(cors());
-const port = 3000;
+
+if(!process.env.PORT) {
+    throw new Error("Please specify the port number for the HTTP server with the environment variable PORT");
+}
+
+const port = process.env.PORT
 
 app.get('/', (req, res) => {
     res.send('Arithmetic service - Hello World!');
 });
 
-app.get('/add/:n/:m', (req, res) => {
-    let n = Number(req.params.n);
-    let m = Number(req.params.m);
-    if (n == null || m == null) {
+app.get('/add', (req, res) => {
+    const {num1, num2} = req.query;
+    if (num1 == null || num2 == null) {
         return res.status(400).send('Error - Please provide two numbers');
     }
-    let sum = add(n, m);
+    const sum = parseFloat(num1) + parseFloat(num2);
     res.send(sum.toString());
 });
-app.get('/subtract/:n/:m', (req, res) => {
-    let n = Number(req.params.n);
-    let m = Number(req.params.m);
-    if (n == null || m == null) {
+app.get('/subtract', (req, res) => {
+    const {num1, num2} = req.query;
+    if (num1 == null || num2 == null) {
         return res.status(400).send('Error - Please provide two numbers');
     }
-    let result = subtract(n, m);
+    const result = parseFloat(num1) - parseFloat(num2);
     res.send(result.toString());
 });
-app.get('/multiply/:n/:m', (req, res) => {
-    let n = Number(req.params.n);
-    let m = Number(req.params.m);
-    if (n == null || m == null) {
+app.get('/multiply', (req, res) => {
+    const {num1, num2} = req.query;
+    if (num1 == null || num2 == null) {
         return res.status(400).send('Error - Please provide two numbers');
     }
-    let result = multiply(n, m);
+    const result = parseFloat(num1) * parseFloat(num2);
     res.send(result.toString());
 });
-app.get('/divide/:n/:m', (req, res) => {
-    let n = Number(req.params.n);
-    let m = Number(req.params.m);
-    if (n == null || m == null) {
+app.get('/divide', (req, res) => {
+    const {num1, num2} = req.query;
+    if (num1 == null || num2 == null) {
         return res.status(400).send('Error - Please provide two numbers');
     }
-    let result = divide(n, m);
+    const result = parseFloat(num1) / parseFloat(num2);
     res.send(result.toString());
 });
 
