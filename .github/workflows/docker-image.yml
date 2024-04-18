@@ -19,6 +19,6 @@ jobs:
           docker push ghcr.io/ajbognar/arithmetic-service:latest
       - name: Publish the image to azure container repository
         run: |
-          docker login --username practicum150 --password ${{secrets.AZURE_CONTAINER_REGISTRY}} practicum150.azurecr.io
-          docker tag ghcr.io/ajbognar/arithmetic-service:latest practicum150.azurecr.io/arithmetic-service:latest
-          docker push practicum150.azurecr.io/arithmetic-service:latest
+          docker login --username practicum16 --password ${{secrets.AZURE_CONTAINER_REGISTRY}} practicum16.azurecr.io
+          docker tag ghcr.io/ajbognar/arithmetic-service:latest practicum16.azurecr.io/arithmetic-service:latest
+          docker push practicum16.azurecr.io/arithmetic-service:latest
